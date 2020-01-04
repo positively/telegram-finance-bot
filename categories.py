@@ -35,7 +35,7 @@ class Categories:
             aliases = list(filter(None, map(str.strip, aliases)))
             aliases.append(category["codename"])
             aliases.append(category["name"])
-            is_base_expense_str = "\u2714" if category['is_base_expense'] = true else "\u2718"
+            is_base_expense_str = "\u2713" if category['is_base_expense'] == True else "\u2715"
             categories_result.append(Category(
                 codename=category['codename'],
                 name=category['name'],

@@ -18,4 +18,4 @@ ENTRYPOINT ["python", "server.py"]
 # docker build -t tfb_r ./
 #
 # Docker run
-# docker run -d --name tfb_r -v '/home/rostislavs/tfb/db':/home/db tfb_r
+# docker run -d --name tfb_r -v 'db':/home/db --env-file env/env.list tfb_r
