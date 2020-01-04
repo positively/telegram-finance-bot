@@ -40,22 +40,23 @@ def add_expense(raw_message: str) -> Expense:
 
 def get_today_statistics() -> str:
     """Возвращает строкой статистику расходов за сегодня"""
+    now = _get_now_datetime().strftime("%Y-%m-%d")
     cursor = db.get_cursor()
-    cursor.execute("select sum(amount)"
-                   "from expense where created=current_date")
+    cursor.execute(f"select sum(amount)"
+                   f"from expense where created LIKE '' || '{now}' || '%'")
     result = cursor.fetchone()
     if not result[0]:
         return "Сегодня ещё нет расходов"
     all_today_expenses = result[0]
-    cursor.execute("select sum(amount) "
-                   "from expense where created=current_date "
-                   "and category_codename in (select codename "
-                   "from category where is_base_expense=true)")
+    cursor.execute(f"select sum(amount) "
+                   f"from expense where created LIKE '' || '{now}' || '%' "
+                   f"and category_codename in (select codename "
+                   f"from category where is_base_expense=true)")
     result = cursor.fetchone()
     base_today_expenses = result[0] if result[0] else 0
     return (f"Расходы сегодня:\n"
-            f"всего — {all_today_expenses} руб.\n"
-            f"базовые — {base_today_expenses} руб. из {_get_budget_limit()} руб.\n\n"
+            f"всего — {all_today_expenses} грн.\n"
+            f"базовые — {base_today_expenses} грн. из {_get_budget_limit()} грн.\n\n"
             f"За текущий месяц: /month")
 
 
@@ -77,16 +78,16 @@ def get_month_statistics() -> str:
     result = cursor.fetchone()
     base_today_expenses = result[0] if result[0] else 0
     return (f"Расходы в текущем месяце:\n"
-            f"всего — {all_today_expenses} руб.\n"
-            f"базовые — {base_today_expenses} руб. из "
-            f"{now.day * _get_budget_limit()} руб.")
+            f"всего — {all_today_expenses} грн.\n"
+            f"базовые — {base_today_expenses} грн из "
+            f"{now.day * _get_budget_limit()} грн.")
 
 
 def last():
     """Возвращает последние несколько расходов"""
     cursor = db.get_cursor()
     cursor.execute(
-        "select e.id, e.amount, c.name "
+        "select e.id, e.amount, c.name, e.raw_text, e.created "
         "from expense e left join category c "
         "on c.codename=e.category_codename "
         "order by created desc limit 10")
@@ -96,7 +97,9 @@ def last():
         last_expenses.append({
             'amount': row[1],
             'id': row[0],
-            'category_name': row[2]
+            'category_name': row[2],
+            'raw_text': row[3],
+            'created': row[4]
         })
     return last_expenses
 
@@ -113,7 +116,7 @@ def _parse_message(raw_message: str) -> Message:
             or not regexp_result.group(1) or not regexp_result.group(2):
         raise exceptions.NotCorrectMessage(
             "Не могу понять сообщение. Напишите сообщение в формате, "
-            "например:\n1500 метро")
+            "например:\n135 моб")
 
     amount = regexp_result.group(1).replace(" ", "")
     category_text = regexp_result.group(2).strip().lower()
@@ -122,12 +125,12 @@ def _parse_message(raw_message: str) -> Message:
 
 def _get_now_formatted() -> str:
     """Возвращает сегодняшнюю дату строкой"""
-    return _get_now_datetime().strftime("%Y-%m-%d")
+    return _get_now_datetime().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def _get_now_datetime():
-    """Возвращает сегодняшний datetime с учётом времненной зоны Мск."""
-    tz = pytz.timezone("Europe/Moscow")
+    """Возвращает сегодняшний datetime с учётом времненной зоны Киева."""
+    tz = pytz.timezone("Europe/Kiev")
     now = datetime.datetime.now(tz)
     return now
 

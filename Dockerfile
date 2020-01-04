@@ -14,3 +14,8 @@ COPY createdb.sql ./
 
 ENTRYPOINT ["python", "server.py"]
 
+# Docker build
+# docker build -t tfb_r ./
+#
+# Docker run
+# docker run -d --name tfb_r -v '/home/rostislavs/tfb/db':/home/db tfb_r

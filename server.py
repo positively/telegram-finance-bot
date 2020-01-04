@@ -31,11 +31,12 @@ async def send_welcome(message: types.Message):
     """Отправляет приветственное сообщение и помощь по боту"""
     await message.answer(
         "Бот для учёта финансов\n\n"
-        "Добавить расход: 250 такси\n"
+        "Добавить расход: 160 такси\n"
         "Сегодняшняя статистика: /today\n"
         "За текущий месяц: /month\n"
         "Последние внесённые расходы: /expenses\n"
-        "Категории трат: /categories")
+        "Категории трат: /categories\n"
+        "Вызов этой справки: /help")
 
 
 @dp.message_handler(lambda message: message.text.startswith('/del'))
@@ -52,7 +53,7 @@ async def categories_list(message: types.Message):
     """Отправляет список категорий расходов"""
     categories = Categories().get_all_categories()
     answer_message = "Категории трат:\n\n* " +\
-            ("\n* ".join([c.name+' ('+", ".join(c.aliases)+')' for c in categories]))
+            ("\n* ".join(['[ '+c.is_base_expense+' ] '+c.name+' ('+", ".join(c.aliases)+')' for c in categories]))
     await message.answer(answer_message)
 
 
@@ -79,7 +80,8 @@ async def list_expenses(message: types.Message):
         return
 
     last_expenses_rows = [
-        f"{row['amount']} руб. на {row['category_name']} —  нажми "
+        f"{row['amount']} грн на {row['category_name']} "
+        f"({row['raw_text']}) [{row['created']}] — "
         f"/del{row['id']} для удаления"
         for row in last_expenses]
     answer_message = "Последние сохранённые траты:\n\n* " + "\n\n* ".join(last_expenses_rows)
@@ -95,7 +97,7 @@ async def add_expense(message: types.Message):
         await message.answer(str(e))
         return
     answer_message = (
-        f"Добавлены траты {expense.amount} руб на {expense.category_name}.\n\n"
+        f"Добавлены траты {expense.amount} грн на {expense.category_name}.\n\n"
         f"{expenses.get_today_statistics()}")
     await message.answer(answer_message)
 
