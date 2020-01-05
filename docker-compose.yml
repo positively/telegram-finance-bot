@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  viar-bot-r:
+    build:
+      context: .
+    image: tfb_r
+    container_name: tfb_r
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env.list
+    volumes:
+      - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db:/home/db"
+#     - "/home/rostislavs/tfb/db:/home/db"
+
+
+  viar-bot-v:
+    image: tfb_r:latest
+    container_name: tfb_v
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env-2.list
+    volumes:
+      - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-2:/home/db"
+#     - "/home/rostislavs/tfb/db-2:/home/db"

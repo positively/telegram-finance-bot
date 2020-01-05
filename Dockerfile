@@ -15,7 +15,9 @@ COPY createdb.sql ./
 ENTRYPOINT ["python", "server.py"]
 
 # Docker build
-# docker build -t tfb_r ./
+# docker build -t tfb_r:0.0.2 ./
 #
 # Docker run
-# docker run -d --name tfb_r -v 'db':/home/db --env-file env/env.list tfb_r
+# docker run -d --name tfb_r -v 'C:\Users\rakst\Documents\Work\ViaRbot\tfb\db':/home/db --env-file env/env.list tfb_r:0.0.2
+# docker run -d --name tfb_r -v /home/rostislavs/tfb/db:/home/db --env-file env/env.list tfb_r:0.0.2
+# docker run -d --name tfb_v -v '/home/rostislavs/tfb/db-2':/home/db --env-file env/env-2.list tfb_r:0.0.2
