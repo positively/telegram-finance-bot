@@ -10,8 +10,8 @@ services:
       - server.py
     env_file: env/env.list
     volumes:
-      - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db:/home/db"
-#     - "/home/rostislavs/tfb/db:/home/db"
+#     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db:/home/db"
+      - "/home/rostislavs/tfb/db:/home/db"
 
 
   viar-bot-v:
@@ -22,5 +22,16 @@ services:
       - server.py
     env_file: env/env-2.list
     volumes:
-      - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-2:/home/db"
-#     - "/home/rostislavs/tfb/db-2:/home/db"
+#     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-2:/home/db"
+      - "/home/rostislavs/tfb/db-2:/home/db"
+
+  viar-bot-i:
+    image: tfb_r:latest
+    container_name: tfb_i
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env-3.list
+    volumes:
+#     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-3:/home/db"
+      - "/home/rostislavs/tfb/db-3:/home/db"
