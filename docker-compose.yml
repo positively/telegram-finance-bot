@@ -46,3 +46,15 @@ services:
     volumes:
 #     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-4:/home/db"
       - "/home/rostislavs/tfb/db-4:/home/db"
+
+  viar-bot-tarasov:
+    image: tfb_r:latest
+    container_name: tfb_it
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env-5.list
+    volumes:
+#     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-5:/home/db"
+      - "/home/rostislavs/tfb/db-5:/home/db"
+
