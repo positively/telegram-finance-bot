@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  viar-bot-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    image: tfb_dev
+    container_name: tfb_dev
+#    networks:
+#      - sheets
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env-dev.list
+    volumes:
+      - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-dev:/home/db"
+#      - "/home/rostislavs/tfb/db-dev:/home/db"
+
+
+#networks:
+#  sheets:
