@@ -58,3 +58,14 @@ services:
 #     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-5:/home/db"
       - "/home/rostislavs/tfb/db-5:/home/db"
 
+  viar-bot-m:
+    image: tfb_r:latest
+    container_name: tfb_m
+    entrypoint:
+      - python
+      - server.py
+    env_file: env/env-6.list
+    volumes:
+#     - "/c/Users/rakst/My Documents/Work/ViaRbot/tfb/db-6:/home/db"
+      - "/home/rostislavs/tfb/db-6:/home/db"
+
