@@ -33,14 +33,14 @@ def export_google_sheets() -> None:
 
   spreadsheet = client.open('TelegramFinanceBotReport')
   ws = spreadsheet.sheet1
-  if ws.title != "All Database": ws.update_title("All Database") 
+  if ws.title != "All Database": ws.update_title("All Database")
   ws.resize(1, 6)
 
   spreadsheet.values_update(
     'All Database!A1',
     params={
       'valueInputOption': 'USER_ENTERED'
-    },    
+    },
     body={
       'values': [[
         "##", "Номер строки", "Дата и время", "Сумма", "Категория", "Исходник"

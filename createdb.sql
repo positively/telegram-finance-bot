@@ -49,6 +49,10 @@ values
         "тв, tv, телевидение"),
     ("subscriptions", "подписки", true,
         "подписка, гугл драйв, гугл диск, google drive, youtube premium, youtube prem, ютуб прем, ютуб премиум"),
+    ("pets", "животные", true,
+        "животное, кот, котик, кошка, собака, корм, наполнитель, мышь, хомяк, свинка, птичка"),
+    ("banks", "банк", true,
+        "банки, укрсиббанк, приватбанк, альфабанк, монобанк, ukrsib, privat24, alfabank, кредит"),
     ("other", "прочее", false, "");
 
 insert into budget(codename, daily_limit) values ('base', 350);
