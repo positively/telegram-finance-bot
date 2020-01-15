@@ -8,7 +8,10 @@ ENV TELEGRAM_PROXY_URL=""
 ENV TELEGRAM_PROXY_LOGIN=""
 ENV TELEGRAM_PROXY_PASSWORD=""
 
-RUN pip install -U pip aiogram pytz && apt-get update && apt-get install sqlite3
+RUN pip install -U pip aiogram pytz gspread oauth2client
+RUN apt-get update && apt-get install sqlite3
+
+COPY env/python_tfbot_sheet.json ./env/
 COPY *.py ./
 COPY createdb.sql ./
 
