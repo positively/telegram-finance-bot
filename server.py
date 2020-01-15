@@ -8,6 +8,7 @@ from aiogram import Bot, Dispatcher, executor, types
 
 import exceptions
 import expenses
+import gsheet
 from categories import Categories
 from middlewares import AccessMiddleware
 
@@ -37,7 +38,16 @@ async def send_welcome(message: types.Message):
         "За текущий месяц: /month\n"
         "Последние внесённые расходы: /expenses\n"
         "Категории трат: /categories\n"
+        "Экспорт в гугл таблицу: /export\n"
         "Вызов этой справки: /help")
+
+
+@dp.message_handler(commands=['export'])
+async def export_google_sheets(message: types.Message):
+    """Экспортирует данные из БД в Google Sheet"""
+    gsheet.export_google_sheets()
+    answer_message = "Экспортировал"
+    await message.answer(answer_message)
 
 
 @dp.message_handler(lambda message: message.text.startswith('/del'))
