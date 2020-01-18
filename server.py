@@ -2,6 +2,7 @@
 import datetime
 import logging
 import os
+import re
 
 import aiohttp
 from aiogram import Bot, Dispatcher, executor, types
@@ -92,7 +93,7 @@ async def list_expenses(message: types.Message):
 
     last_expenses_rows = [
         f"{row['amount']} грн на <b>{row['category_name']}</b> "
-        f"(<i>{row['raw_text'].split()[1]}</i>) "
+        f"(<i>" + re.match(r"^([\d]+)\s+(.*?)$", row['raw_text'], re.MULTILINE).group(2) + "</i>) "
         f"" + datetime.datetime.strptime(row['created'], "%Y-%m-%d %H:%M:%S").strftime("%d.%m.%Y %H:%M") + " — "
         f"/del{row['id']} для удаления"
         for row in last_expenses]

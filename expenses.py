@@ -32,7 +32,7 @@ def add_expense(raw_message: str) -> Expense:
         "amount": parsed_message.amount,
         "created": _get_now_formatted(),
         "category_codename": category.codename,
-        "raw_text": raw_message
+        "raw_text": raw_message.replace('\n', ' ')
     })
     return Expense(amount=parsed_message.amount,
                    category_name=category.name)
