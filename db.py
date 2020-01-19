@@ -22,6 +22,19 @@ def insert(table: str, column_values: Dict):
 
 def fetchall(table: str, columns: List[str]) -> List[Tuple]:
     columns_joined = ", ".join(columns)
+    cursor.execute(f"SELECT {columns_joined} FROM {table}")
+    rows = cursor.fetchall()
+    result = []
+    for row in rows:
+        dict_row = {}
+        for index, column in enumerate(columns):
+            dict_row[column] = row[index]
+        result.append(dict_row)
+    return result
+
+
+def fetchall_order(table: str, columns: List[str]) -> List[Tuple]:
+    columns_joined = ", ".join(columns)
     cursor.execute(f"SELECT {columns_joined} FROM {table} ORDER BY `order` ASC")
     rows = cursor.fetchall()
     result = []

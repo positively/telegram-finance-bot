@@ -18,7 +18,7 @@ class Categories:
 
     def _load_categories(self) -> List[Category]:
         """Возвращает справочник категорий расходов из БД"""
-        categories = db.fetchall(
+        categories = db.fetchall_order(
             "category", "codename name is_base_expense aliases".split()
         )
         categories = self._fill_aliases(categories)
