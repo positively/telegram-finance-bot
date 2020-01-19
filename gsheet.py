@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import db
 import re
 import gspread
@@ -8,7 +9,7 @@ import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('env/gsheet_token_dev.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('env/' + os.getenv('GDRIVE_AIP_KEYFILE'), scope)
 client = gspread.authorize(creds)
 
 def export_google_sheets() -> None:
