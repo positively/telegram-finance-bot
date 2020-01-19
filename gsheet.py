@@ -12,7 +12,8 @@ def export_google_sheets() -> str:
   #logging.warning(f'export google sheets method called.')
   GOOGLE_DRIVE_API_KEYFILE = os.getenv('GOOGLE_DRIVE_API_KEYFILE_NAME')
   if not GOOGLE_DRIVE_API_KEYFILE:
-    return (f"Гугл аккаунт не настроен")
+    return (f"Гугл аккаунт не настроен\n"
+            f"https://towardsdatascience.com/accessing-google-spreadsheet-data-using-python-90a5bc214fd2")
 
   scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
   creds = ServiceAccountCredentials.from_json_keyfile_name('env/' + GOOGLE_DRIVE_API_KEYFILE, scope)
