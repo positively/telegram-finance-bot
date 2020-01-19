@@ -22,7 +22,7 @@ def insert(table: str, column_values: Dict):
 
 def fetchall(table: str, columns: List[str]) -> List[Tuple]:
     columns_joined = ", ".join(columns)
-    cursor.execute(f"SELECT {columns_joined} FROM {table}")
+    cursor.execute(f"SELECT {columns_joined} FROM {table} ORDER BY `order` ASC")
     rows = cursor.fetchall()
     result = []
     for row in rows:
