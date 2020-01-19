@@ -11,7 +11,7 @@ ENV TELEGRAM_PROXY_PASSWORD=""
 RUN pip install -U pip aiogram pytz gspread oauth2client
 RUN apt-get update && apt-get install sqlite3
 
-COPY env/gsheet_token_dev.json ./env/
+COPY env/*.json ./env/
 COPY *.py ./
 COPY createdb.sql ./
 
