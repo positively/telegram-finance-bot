@@ -8,12 +8,16 @@ import gspread
 import datetime
 from oauth2client.service_account import ServiceAccountCredentials
 
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('env/' + os.getenv('GDRIVE_AIP_KEYFILE'), scope)
-client = gspread.authorize(creds)
-
-def export_google_sheets() -> None:
+def export_google_sheets() -> str:
   #logging.warning(f'export google sheets method called.')
+  GOOGLE_DRIVE_API_KEYFILE = os.getenv('GOOGLE_DRIVE_API_KEYFILE_NAME')
+  if not GOOGLE_DRIVE_API_KEYFILE:
+    return (f"Гугл аккаунт не настроен")
+
+  scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+  creds = ServiceAccountCredentials.from_json_keyfile_name('env/' + GOOGLE_DRIVE_API_KEYFILE, scope)
+  client = gspread.authorize(creds)
+
   """Return all expenses"""
   cursor = db.get_cursor()
   cursor.execute(
@@ -89,4 +93,4 @@ def export_google_sheets() -> None:
   """Update SUM in header"""
   ws.update_acell('E1', '=SUM(E3:E)')
 
-
+  return (f"Экспортировал")

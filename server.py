@@ -46,8 +46,7 @@ async def send_welcome(message: types.Message):
 @dp.message_handler(commands=['export'])
 async def export_google_sheets(message: types.Message):
     """Экспортирует данные из БД в Google Sheet"""
-    gsheet.export_google_sheets()
-    answer_message = "Экспортировал"
+    answer_message = gsheet.export_google_sheets()
     await message.answer(answer_message)
 
 
